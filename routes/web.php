@@ -1,16 +1,17 @@
 <?php
 
+use App\Models\Movie;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('movies');
+    return view('movies', [
+        'movies' => Movie::all()
+    ]);
 });
 
-Route::get('/movies/{movie}', function ($slug) {
-    $movie = file_get_contents(__DIR__ . "/../resources/movies/{$slug}.html");
-
+Route::get('movies/{movie}', function ($id) {
     return view('movie', [
-        'movie' => $movie
+        'movie' => Movie::findOrFail($id)
     ]);
 });
 

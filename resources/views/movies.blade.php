@@ -8,18 +8,18 @@
     <title>Movies Page</title>
 </head>
 <body>
-    <article>
-        <a href="/movies/movie1">Movie 1</a>
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ornare nisi vitae risus pellentesque consectetur. Vivamus lacinia nec orci a porttitor. Sed hendrerit, massa sed ornare facilisis, lacus mauris sollicitudin lorem, et vulputate massa velit vitae sem. Pellentesque id feugiat lorem. Aenean tortor dolor, placerat vitae sapien eget, tempor sagittis massa. In tristique dictum quam at ullamcorper. Quisque feugiat ac dui a faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Integer vel mauris eget nisi fringilla dignissim. Duis malesuada tincidunt efficitur.
-        </p>
-    </article>
+    @foreach($movies as $movie)
+        <article>
+            <h1>
+                <a href="/movies/{{ $movie -> id }}">
+                    {{ $movie -> title }}
+                </a>
+            </h1>
 
-    <article>
-        <a href="/movies/movie2">Movie 2</a>
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ornare nisi vitae risus pellentesque consectetur. Vivamus lacinia nec orci a porttitor. Sed hendrerit, massa sed ornare facilisis, lacus mauris sollicitudin lorem, et vulputate massa velit vitae sem. Pellentesque id feugiat lorem. Aenean tortor dolor, placerat vitae sapien eget, tempor sagittis massa. In tristique dictum quam at ullamcorper. Quisque feugiat ac dui a faucibus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Integer vel mauris eget nisi fringilla dignissim. Duis malesuada tincidunt efficitur.
-        </p>
-    </article>
+            <div>
+                {{ $movie -> year_of_release }}
+            </div>
+        </article>
+    @endforeach
 </body>
 </html>
