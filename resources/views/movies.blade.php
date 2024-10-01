@@ -11,7 +11,7 @@
     @foreach($movies as $movie)
         <article>
             <h1>
-                <a href="/movies/{{ $movie -> id }}">
+                <a href="/movies/{{ $movie -> slug }}">
                     {{ $movie -> title }}
                 </a>
             </h1>

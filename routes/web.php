@@ -9,9 +9,9 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('movies/{movie}', function ($id) {
+Route::get('movies/{movie:slug}', function (Movie $movie) {
     return view('movie', [
-        'movie' => Movie::findOrFail($id)
+        'movie' => $movie
     ]);
 });
 
