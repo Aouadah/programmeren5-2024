@@ -11,9 +11,11 @@ class Movie extends Model
 
     protected $guarded = ['id'];
 
-//    public function getRouteKeyName()
-//    {
-//        return 'slug';
-//    }
+    //eloquent relationship
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
 
 }

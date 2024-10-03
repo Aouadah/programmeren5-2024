@@ -16,6 +16,10 @@
                 </a>
             </h1>
 
+            <p>
+                <a href="#"> {{ $movie->category->name }} </a>
+            </p>
+
             <div>
                 {{ $movie -> year_of_release }}
             </div>

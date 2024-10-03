@@ -10,6 +10,11 @@
 <body>
 <article>
     <h1>{{ $movie->title }}</h1>
+
+    <p>
+        <a href="#"> {{ $movie->category->name }} </a>
+    </p>
+
     <div>
         <p>Genre: {{ $movie->genre }}</p>
     </div>
