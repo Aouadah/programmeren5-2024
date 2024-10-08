@@ -17,7 +17,7 @@
             </h1>
 
             <p>
-                <a href="#"> {{ $movie->category->name }} </a>
+                <a href="/categories/{{ $movie->category->slug }}"> {{ $movie->category->name }} </a>
             </p>
 
             <div>

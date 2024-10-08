@@ -16,6 +16,4 @@ class Movie extends Model
     {
         return $this->belongsTo(Category::class);
     }
-
-
 }
