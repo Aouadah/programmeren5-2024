@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\MovieController;
+use App\Http\Middleware\AdminOnly;
 use App\Models\Category;
 use App\Models\Movie;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -21,3 +24,10 @@ Route::get('categories/{category:slug}', function (Category $category) {
         'movies' => $category->movies
     ]);
 });
+
+// Inlogpagina
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('admin/movies/create', [MovieController::class, 'create'])->middleware(AdminOnly::class);
