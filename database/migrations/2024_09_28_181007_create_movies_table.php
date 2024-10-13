@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('duration');
             $table->string('year_of_release');
             $table->string('rating');
+            $table->string('thumbnail')->nullable();
             $table->timestamps();
             $table->timestamp('published_at')->nullable();
         });

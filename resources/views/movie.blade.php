@@ -27,6 +27,10 @@
     <div>
         <p>Rating: {{ $movie->rating }}</p>
     </div>
+
+    <div>
+        <img src="{{ asset('storage/' . $movie->thumbnail) }}" alt="Thumbnail for {{ $movie->title }}" style="max-width:300px; height:auto;">
+    </div>
 </article>
 
 <a href="/">Back to Home</a>

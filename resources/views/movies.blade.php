@@ -23,6 +23,10 @@
             <div>
                 {{ $movie -> year_of_release }}
             </div>
+
+            <div>
+                <img src="{{ asset('storage/' . $movie->thumbnail) }}" alt="Thumbnail for {{ $movie->title }}" style="max-width:300px; height:auto;">
+            </div>
         </article>
     @endforeach
 </body>

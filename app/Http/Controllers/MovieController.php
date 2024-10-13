@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use http\Env\Response;
+use App\Models\Movie;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class MovieController extends Controller
 {
@@ -20,5 +21,26 @@ class MovieController extends Controller
         }
 
         return view('movies.create');
+    }
+
+    public function store(Request $request)
+    {
+        $attributes = $request->validate([
+            'title' => 'required',
+            'slug' => ['required', Rule::unique('movies', 'slug')],
+            'genre' => 'required',
+            'duration' => 'required',
+            'year_of_release' => 'required',
+            'rating' => 'required',
+            'thumbnail' => 'required|image',
+            'category_id' => ['required', Rule::exists('categories', 'id')],
+        ]);
+
+        $attributes['user_id'] = auth()->id();
+        $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails', 'public');
+
+        Movie::create($attributes);
+
+        return redirect('/');
     }
 }

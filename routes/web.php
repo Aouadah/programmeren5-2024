@@ -30,4 +30,6 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+// CRUD
 Route::get('admin/movies/create', [MovieController::class, 'create'])->middleware(AdminOnly::class);
+Route::post('admin/movies', [MovieController::class, 'store'])->middleware(AdminOnly::class);
