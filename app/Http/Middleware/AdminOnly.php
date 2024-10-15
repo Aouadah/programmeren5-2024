@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminOnly
 {
+    // Only admins can view this page
     public function handle($request, Closure $next)
     {
         if (auth()->user()?->name!== 'test'){

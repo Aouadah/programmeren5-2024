@@ -11,13 +11,13 @@
     @foreach($movies as $movie)
         <article>
             <h1>
-                <a href="/movies/{{ $movie -> slug }}">
+                <a href="/movies/{{ $movie -> id }}">
                     {{ $movie -> title }}
                 </a>
             </h1>
 
             <p>
-                <a href="/categories/{{ $movie->category->slug }}"> {{ $movie->category->name }} </a>
+                <a href="/categories/{{ $movie->category->id }}"> {{ $movie->category->name }} </a>
             </p>
 
             <div>

@@ -13,8 +13,10 @@
 </head>
 <body>
 <h1>Create Movie</h1>
-<form method="POST" action="/movies" enctype="multipart/form-data">
+<form method="POST" action="/movies/ {{ $movie->id }}" enctype="multipart/form-data">
     @csrf
+    @method('PUT')
+
     <div>
         <label for="title">Title:</label>
         <input type="text" id="title" name="title" required>
@@ -64,7 +66,7 @@
     </div>
 
     <div>
-        <button type="submit">Submit</button>
+        <button type="submit">Update</button>
     </div>
 </form>
 </body>
