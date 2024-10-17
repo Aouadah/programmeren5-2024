@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Middleware\AdminOnly;
+use App\Models\Category;
 use App\Models\Movie;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -16,9 +17,15 @@ class MovieController extends Controller
     }
 
     // Index page
-    public function index()
+    public function index(Request $request)
     {
         $movies = Movie::all();
+
+        $search = $request->query('search');
+        if ($search) {
+            $movies = Movie::where('title', 'LIKE', '%' . $search . '%')->get();
+        }
+
         return view('movies.index', compact('movies'));
     }
 
@@ -58,20 +65,42 @@ class MovieController extends Controller
 
         Movie::create($attributes);
 
-        return redirect('admin/movies');
+        return redirect('movies');
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $movie = Movie::findOrFail($id);
-        $movie->update($request->all());
 
-        return redirect('admin/movies');
+        $attributes = $request->validate([
+            'title' => 'required',
+            'slug' => ['required', Rule::unique('movies', 'slug')->ignore($movie->id)],
+            'genre' => 'required',
+            'duration' => 'required',
+            'year_of_release' => 'required',
+            'rating' => 'required',
+            'category_id' => ['required', Rule::exists('categories', 'id')],
+        ]);
+
+        if ($request->hasFile('thumbnail')) {
+            $attributes['thumbnail'] = $request->file('thumbnail')->store('thumbnails', 'public');
+        }
+
+        $movie->update($attributes);
+
+        return redirect('movies');
+    }
+
+    public function edit($id)
+    {
+        $movie = Movie::findOrFail($id);
+        return view('movies.edit', compact('movie'));
     }
 
     public function destroy($id){
         $movie = Movie::findOrFail($id);
         $movie->delete();
 
-        return redirect('admin/movies');
+        return redirect('movies');
     }
 }

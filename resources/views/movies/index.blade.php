@@ -8,6 +8,12 @@
     <title>Movies Page</title>
 </head>
 <body>
+
+<form action="/movies" method="GET">
+    <input type="text" name="search" placeholder="Search for a movie..." value="{{ request('search') }}">
+    <button type="submit">Search</button>
+</form>
+
 @foreach($movies as $movie)
     <article>
         <h1>
@@ -27,6 +33,14 @@
         <div>
             <img src="{{ asset('storage/' . $movie->thumbnail) }}" alt="Thumbnail for {{ $movie->title }}" style="max-width:300px; height:auto;">
         </div>
+
+        <a href="/movies/{{ $movie->id }}/edit">Edit</a>
+
+        <form method="POST" action="/movies/{{ $movie->id }}" id="delete-form" class="hidden">
+            @csrf
+            @method('DELETE')
+            <button type="submit" onclick="return confirm('Are you sure you want to delete this movie?')">Delete</button>
+        </form>
     </article>
 @endforeach
 </body>
