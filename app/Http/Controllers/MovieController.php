@@ -19,15 +19,29 @@ class MovieController extends Controller
     // Index page
     public function index(Request $request)
     {
-        $movies = Movie::all();
+        // Get all categories for the filter
+        $categories = Category::all();
 
+        $movies = Movie::query();
+
+        // Search by movie title or year of release
         $search = $request->query('search');
         if ($search) {
-            $movies = Movie::where('title', 'LIKE', '%' . $search . '%')->get();
+            $movies->where('title', 'LIKE', '%' . $search . '%')
+                ->orWhere('year_of_release', 'LIKE', '%' . $search . '%')->get();
         }
 
-        return view('movies.index', compact('movies'));
+        // Filter by category
+        $categoryId = $request->query('category_id');
+        if ($categoryId) {
+            $movies->where('category_id', $categoryId)->get();
+        }
+
+        $movies = $movies->get();
+
+        return view('movies.index', compact('movies', 'categories'));
     }
+
 
     // Detail page
     public function show($id)
@@ -68,6 +82,7 @@ class MovieController extends Controller
         return redirect('movies');
     }
 
+    // Update a movie
     public function update(Request $request, $id)
     {
         $movie = Movie::findOrFail($id);
@@ -91,12 +106,14 @@ class MovieController extends Controller
         return redirect('movies');
     }
 
+    // Edit a movie
     public function edit($id)
     {
         $movie = Movie::findOrFail($id);
         return view('movies.edit', compact('movie'));
     }
 
+    // Delete a movie
     public function destroy($id){
         $movie = Movie::findOrFail($id);
         $movie->delete();

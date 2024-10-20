@@ -26,15 +26,15 @@ Route::get('categories/{category:id}', function (Category $category) {
     ]);
 });
 
-// Inlogpagina
+// Login page
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 // CRUD
 Route::get('movies', [MovieController::class, 'index']);
-Route::get('movies/{id}', [MovieController::class, 'show']);
 Route::get('movies/create', [MovieController::class, 'create']);
+Route::get('movies/{id}', [MovieController::class, 'show']);
 Route::post('movies', [MovieController::class, 'store']);
 Route::put('movies/{id}', [MovieController::class, 'update']);
 Route::get('movies/{id}/edit', [MovieController::class, 'edit']);
