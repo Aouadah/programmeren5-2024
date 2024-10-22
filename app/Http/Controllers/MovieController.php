@@ -6,6 +6,7 @@ use App\Http\Middleware\AdminOnly;
 use App\Models\Category;
 use App\Models\Movie;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class MovieController extends Controller
@@ -65,7 +66,6 @@ class MovieController extends Controller
     {
         $attributes = $request->validate([
             'title' => 'required',
-            'slug' => ['required', Rule::unique('movies', 'slug')],
             'genre' => 'required',
             'duration' => 'required',
             'year_of_release' => 'required',
@@ -88,12 +88,11 @@ class MovieController extends Controller
         $movie = Movie::findOrFail($id);
 
         $attributes = $request->validate([
-            'title' => 'required',
-            'slug' => ['required', Rule::unique('movies', 'slug')->ignore($movie->id)],
-            'genre' => 'required',
-            'duration' => 'required',
-            'year_of_release' => 'required',
-            'rating' => 'required',
+            'title' => 'required|string|max:255',
+            'genre' => 'required|string|max:255',
+            'duration' => 'required|integer|min:1',
+            'year_of_release' => 'required|integer|min:1900|max:2024',
+            'rating' => 'required|numeric|min:1|max:10',
             'category_id' => ['required', Rule::exists('categories', 'id')],
         ]);
 

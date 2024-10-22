@@ -12,42 +12,66 @@
     <title>Create Page</title>
 </head>
 <body>
+
+{{--@if ($errors->any())--}}
+{{--    <div class="alert alert-danger">--}}
+{{--        <ul>--}}
+{{--            @foreach ($errors->all() as $error)--}}
+{{--                <li>{{ $error }}</li>--}}
+{{--            @endforeach--}}
+{{--        </ul>--}}
+{{--    </div>--}}
+{{--@endif--}}
+
 <h1>Create Movie</h1>
 <form method="POST" action="/movies" enctype="multipart/form-data">
     @csrf
     <div>
         <label for="title">Title:</label>
-        <input type="text" id="title" name="title" required>
-    </div>
-
-    <div>
-        <label for="slug">Slug:</label>
-        <input type="text" id="slug" name="slug" required>
+        <input type="text" id="title" name="title" value="{{ old('title') }}">
+        @error('title')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
     </div>
 
     <div>
         <label for="genre">Genre:</label>
-        <input type="text" id="genre" name="genre" required>
+        <input type="text" id="genre" name="genre" value="{{ old('genre') }}">
+        @error('genre')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
     </div>
 
     <div>
         <label for="duration">Duration (minutes):</label>
-        <input type="number" id="duration" name="duration" required>
+        <input type="number" id="duration" name="duration" value="{{ old('duration') }}">
+        @error('duration')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
     </div>
 
     <div>
         <label for="year_of_release">Year of Release:</label>
-        <input type="number" id="year_of_release" name="year_of_release" min="1900" max="2024" required>
+        <input type="number" id="year_of_release" name="year_of_release" min="1900" max="2024" value="{{ old('year_of_release') }}">
+        @error('year_of_release')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
     </div>
 
     <div>
         <label for="rating">Rating:</label>
-        <input type="number" id="rating" name="rating" min="1" max="10" required>
+        <input type="number" id="rating" name="rating" min="1" max="10" value="{{ old('rating') }}">
+        @error('rating')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
     </div>
 
     <div>
         <label for="thumbnail">Thumbnail:</label>
-        <input type="file" id="thumbnail" name="thumbnail" required>
+        <input type="file" id="thumbnail" name="thumbnail">
+        @error('thumbnail')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
     </div>
 
     <div>
@@ -58,9 +82,14 @@
             @endphp
 
             @foreach ($categories as $category)
-                <option value="{{ $category -> id }}">{{ $category->name }}</option>
+                <option value="{{ $category->id }}" @if(old('category_id') == $category->id) selected @endif>
+                    {{ $category->name }}
+                </option>
             @endforeach
         </select>
+        @error('category_id')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
     </div>
 
     <div>

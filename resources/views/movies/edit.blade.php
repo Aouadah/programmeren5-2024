@@ -22,10 +22,10 @@
         <input type="text" id="title" name="title" value="{{ old('title', $movie->title) }}" required>
     </div>
 
-    <div>
-        <label for="slug">Slug:</label>
-        <input type="text" id="slug" name="slug" value="{{ old('slug', $movie->slug) }}" required>
-    </div>
+{{--    <div>--}}
+{{--        <label for="slug">Slug:</label>--}}
+{{--        <input type="text" id="slug" name="slug" value="{{ old('slug', $movie->slug) }}" required>--}}
+{{--    </div>--}}
 
     <div>
         <label for="genre">Genre:</label>
