@@ -119,4 +119,15 @@ class MovieController extends Controller
 
         return redirect('movies');
     }
+
+    // Change the status of a movie
+    public function status($id)
+    {
+        $movie = Movie::findOrFail($id);
+
+        $movie->status = $movie->status === 'active' ? 'inactive' : 'active';
+        $movie->save();
+
+        return redirect()->back()->with('message', 'Movie status updated!');
+    }
 }

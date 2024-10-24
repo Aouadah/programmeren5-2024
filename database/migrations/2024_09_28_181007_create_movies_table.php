@@ -16,13 +16,13 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class);
             $table->foreignId('category_id')->constrained();
-//            $table->string('slug')->unique();
             $table->string('title');
             $table->string('genre');
             $table->string('duration');
             $table->string('year_of_release');
             $table->string('rating');
             $table->string('thumbnail')->nullable();
+            $table->string('status')->default('active');
             $table->timestamps();
             $table->timestamp('published_at')->nullable();
         });

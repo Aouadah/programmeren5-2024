@@ -36,7 +36,11 @@ Route::get('movies', [MovieController::class, 'index']);
 Route::get('movies/create', [MovieController::class, 'create']);
 Route::get('movies/{id}', [MovieController::class, 'show']);
 Route::post('movies', [MovieController::class, 'store'])->middleware('auth');
+Route::post('/movies/{id}', [MovieController::class, 'status']);
 Route::put('movies/{id}', [MovieController::class, 'update']);
 Route::get('movies/{id}/edit', [MovieController::class, 'edit'])->middleware('auth');//->can('edit-movie', 'movie');
 Route::delete('movies/{id}', [MovieController::class, 'destroy']);
 
+// Admin
+// Routes to get to the admin page, where you have a table where you can edit, delete and change the status of movies,
+// so that posts needs to be approved to appear on the index page (I think its called a dashboard)

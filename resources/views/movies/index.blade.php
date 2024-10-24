@@ -42,6 +42,13 @@
             <img src="{{ asset('storage/' . $movie->thumbnail) }}" alt="Thumbnail for {{ $movie->title }}" style="max-width:300px; height:auto;">
         </div>
 
+        <form method="POST" action="/movies/{{ $movie->id }}">
+            @csrf
+            <button type="submit">
+                {{ $movie->status === 'inactive' ? 'Set Active' : 'Set Inactive' }}
+            </button>
+        </form>
+
         <a href="/movies/{{ $movie->id }}/edit">Edit</a>
 
         <form method="POST" action="/movies/{{ $movie->id }}" id="delete-form" class="hidden">
