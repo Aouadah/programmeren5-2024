@@ -23,7 +23,7 @@ class MovieController extends Controller
         // Get all categories for the filter
         $categories = Category::all();
 
-        $movies = Movie::query();
+        $movies = Movie::query()->where('status', 'active');
 
         // Search by movie title or year of release
         $search = $request->query('search');
@@ -113,7 +113,8 @@ class MovieController extends Controller
     }
 
     // Delete a movie
-    public function destroy($id){
+    public function destroy($id)
+    {
         $movie = Movie::findOrFail($id);
         $movie->delete();
 
@@ -129,5 +130,14 @@ class MovieController extends Controller
         $movie->save();
 
         return redirect()->back()->with('message', 'Movie status updated!');
+    }
+
+    public function admin(Request $request)
+    {
+
+        $movies = Movie::with('category')->get();
+        $categories = Category::all();
+
+        return view('movies.admin', compact('movies', 'categories'));
     }
 }
