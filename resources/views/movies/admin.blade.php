@@ -14,6 +14,7 @@
         <tr class="bg-gray-100 border border-gray-300">
             <th class="py-2 px-4 border border-gray-300">#</th>
             <th class="py-2 px-4 border border-gray-300">Title</th>
+            <th class="py-2 px-4 border border-gray-300">User</th>
             <th class="py-2 px-4 border border-gray-300">Category</th>
             <th class="py-2 px-4 border border-gray-300">Genre</th>
             <th class="py-2 px-4 border border-gray-300">Duration</th>
@@ -25,6 +26,7 @@
             <tr class="border-b border-gray-300">
                 <td class="py-2 px-4 border border-gray-300">{{$movie->id}}</td>
                 <td class="py-2 px-4 border border-gray-300">{{$movie->title}}</td>
+                <td class="py-2 px-4 border border-gray-300">{{$movie->user->name}}</td>
                 <td class="py-2 px-4 border border-gray-300">{{$movie->category->name}}</td>
                 <td class="py-2 px-4 border border-gray-300">{{$movie->genre}}</td>
                 <td class="py-2 px-4 border border-gray-300">{{$movie->duration}}</td>

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\AdminOnly;
 use App\Models\Category;
 use App\Models\Movie;
@@ -17,10 +18,14 @@ Route::get('categories/{category:id}', function (Category $category) {
 
 // Login page
 Auth::routes();
-
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-// CRUD
+// Profile
+//Route::get('/profile', [ProfileController::class, 'show'])->middleware('auth')->name('profile.show');
+Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show')->middleware('auth');
+Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');
+
+// Movies
 Route::get('movies', [MovieController::class, 'index']);
 Route::get('movies/admin', [MovieController::class, 'admin'])->middleware('auth');
 Route::get('movies/create', [MovieController::class, 'create']);

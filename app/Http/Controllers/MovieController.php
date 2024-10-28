@@ -14,7 +14,8 @@ class MovieController extends Controller
     // Middleware
     public function __construct()
     {
-        $this->middleware(AdminOnly::class)->only('create');
+        $this->middleware('auth')->only(['create', 'store', 'edit', 'update', 'destroy']);
+        $this->middleware(AdminOnly::class)->only('admin');
     }
 
     // Index page
@@ -54,10 +55,6 @@ class MovieController extends Controller
     // Create a new movie
     public function create()
     {
-        if (auth()->user()?->name!== 'test'){
-            abort(403);
-        }
-
         return view('movies.create');
     }
 
@@ -87,6 +84,10 @@ class MovieController extends Controller
     {
         $movie = Movie::findOrFail($id);
 
+        if ($movie->user_id !== auth()->id()) {
+            abort(403);
+        }
+
         $attributes = $request->validate([
             'title' => 'required|string|max:255',
             'genre' => 'required|string|max:255',
@@ -109,6 +110,11 @@ class MovieController extends Controller
     public function edit($id)
     {
         $movie = Movie::findOrFail($id);
+
+        if ($movie->user_id !== auth()->id()) {
+            abort(403);
+        }
+
         return view('movies.edit', compact('movie'));
     }
 
@@ -116,6 +122,11 @@ class MovieController extends Controller
     public function destroy($id)
     {
         $movie = Movie::findOrFail($id);
+
+        if ($movie->user_id !== auth()->id()) {
+            abort(403);
+        }
+
         $movie->delete();
 
         return redirect('movies');
@@ -132,7 +143,8 @@ class MovieController extends Controller
         return redirect()->back()->with('message', 'Movie status updated!');
     }
 
-    public function admin(Request $request)
+    // Show a table of all movies
+    public function admin()
     {
 
         $movies = Movie::with('category')->get();
