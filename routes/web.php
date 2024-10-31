@@ -21,12 +21,11 @@ Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 // Profile
-//Route::get('/profile', [ProfileController::class, 'show'])->middleware('auth')->name('profile.show');
 Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show')->middleware('auth');
 Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');
 
 // Movies
-Route::get('movies', [MovieController::class, 'index']);
+Route::get('movies', [MovieController::class, 'index'])->name('movies.index');
 Route::get('movies/admin', [MovieController::class, 'admin'])->middleware('auth');
 Route::get('movies/create', [MovieController::class, 'create']);
 Route::get('movies/{id}', [MovieController::class, 'show']);

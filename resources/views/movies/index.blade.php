@@ -7,6 +7,12 @@
     <title>Movies Page</title>
 </head>
 <body>
+@if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
+<a href="/movies/create">Create</a>
 
 <!-- Search -->
 <form action="/movies" method="GET">

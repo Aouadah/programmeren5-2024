@@ -8,6 +8,8 @@ use App\Models\Movie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use App\Models\UserLogin;
+use Carbon\Carbon;
 
 class MovieController extends Controller
 {
@@ -55,6 +57,13 @@ class MovieController extends Controller
     // Create a new movie
     public function create()
     {
+        // You need to be logged in on 5 different days before you can create a new movie
+        $loginDays = UserLogin::where('user_id', auth()->id())->distinct('login_date')->count();
+
+        if ($loginDays < 5) {
+            return redirect()->back()->with('error', 'You need to have logged in on 5 different days to create a movie.');
+        }
+
         return view('movies.create');
     }
 
