@@ -1,38 +1,30 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Movie Page</title>
-</head>
-<body>
-<article>
-    <h1>{{ $movie->title }}</h1>
+@extends('layouts.app')
 
-    <p>
-        <a href="/categories/{{ $movie->category->id }}"> {{ $movie->category->name }} </a>
-    </p>
-
-    <div>
-        <p>Genre: {{ $movie->genre }}</p>
-    </div>
-    <div>
-        <p>Duration: {{ $movie->duration }}</p>
-    </div>
-    <div>
-        <p>Year of release: {{ $movie->year_of_release }}</p>
-    </div>
-    <div>
-        <p>Rating: {{ $movie->rating }}</p>
-    </div>
-
-    <div>
-        <img src="{{ asset('storage/' . $movie->thumbnail) }}" alt="Thumbnail for {{ $movie->title }}" style="max-width:300px; height:auto;">
-    </div>
-</article>
-
-<a href="/movies">Back to Home</a>
-</body>
-</html>
+@section('content')
+    <h1 class="mb-4 ml-6">Details</h1>
+    <article class="flex flex-row justify-around">
+        <div class="bg-white p-6 rounded-lg shadow-md w-5/12">
+            <h2 class="mb-4">{{ $movie->title }}</h2>
+            <p class="mb-4">
+                Category: {{ $movie->category->name }}
+            </p>
+            <p class="mb-4">
+                Genre: {{ $movie->genre }}
+            </p>
+            <p class="mb-4">
+                Duration: {{ $movie->duration }}
+            </p>
+            <p class="mb-4">
+                Year of release: {{ $movie->year_of_release }}
+            </p>
+            <p class="mb-4">
+                Rating: {{ $movie->rating }}
+            </p>
+        </div>
+        <div>
+            <div>
+                <img src="{{ asset('storage/' . $movie->thumbnail) }}" alt="Thumbnail for {{ $movie->title }}" style="max-width:300px; height:auto;">
+            </div>
+        </div>
+    </article>
+@endsection

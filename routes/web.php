@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\ProfileController;
@@ -16,6 +15,11 @@ Route::get('categories/{category:id}', function (Category $category) {
     ]);
 });
 
+// Home page
+Route::get('/', function () {
+    return view('welcome');
+});
+
 // Login page
 Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -26,11 +30,11 @@ Route::put('/profile', [ProfileController::class, 'update'])->name('profile.upda
 
 // Movies
 Route::get('movies', [MovieController::class, 'index'])->name('movies.index');
-Route::get('movies/admin', [MovieController::class, 'admin'])->middleware('auth');
-Route::get('movies/create', [MovieController::class, 'create']);
+Route::get('movies/admin', [MovieController::class, 'admin'])->middleware('auth')->name('movies.admin');
+Route::get('movies/create', [MovieController::class, 'create'])->name('movies.create');
 Route::get('movies/{id}', [MovieController::class, 'show']);
 Route::post('movies', [MovieController::class, 'store'])->middleware('auth');
 Route::post('/movies/{id}', [MovieController::class, 'status']);
 Route::put('movies/{id}', [MovieController::class, 'update']);
-Route::get('movies/{id}/edit', [MovieController::class, 'edit'])->middleware('auth');//->can('edit-movie', 'movie');
+Route::get('movies/{id}/edit', [MovieController::class, 'edit'])->middleware('auth');
 Route::delete('movies/{id}', [MovieController::class, 'destroy']);

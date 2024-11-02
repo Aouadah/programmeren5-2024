@@ -60,7 +60,7 @@ class MovieController extends Controller
         // You need to be logged in on 5 different days before you can create a new movie
         $loginDays = UserLogin::where('user_id', auth()->id())->distinct('login_date')->count();
 
-        if ($loginDays < 5) {
+        if ($loginDays < 4) {
             return redirect()->back()->with('error', 'You need to have logged in on 5 different days to create a movie.');
         }
 
@@ -82,6 +82,7 @@ class MovieController extends Controller
 
         $attributes['user_id'] = auth()->id();
         $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails', 'public');
+        $attributes['status'] = 'inactive';
 
         Movie::create($attributes);
 
@@ -112,7 +113,7 @@ class MovieController extends Controller
 
         $movie->update($attributes);
 
-        return redirect('movies');
+        return redirect('profile');
     }
 
     // Edit a movie
@@ -138,7 +139,7 @@ class MovieController extends Controller
 
         $movie->delete();
 
-        return redirect('movies');
+        return redirect('profile');
     }
 
     // Change the status of a movie
@@ -149,7 +150,7 @@ class MovieController extends Controller
         $movie->status = $movie->status === 'active' ? 'inactive' : 'active';
         $movie->save();
 
-        return redirect()->back()->with('message', 'Movie status updated!');
+        return redirect()->back();
     }
 
     // Show a table of all movies

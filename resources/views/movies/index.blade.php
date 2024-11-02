@@ -1,53 +1,52 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Movies Page</title>
-</head>
-<body>
-@if(session('error'))
-    <div class="alert alert-danger">
-        {{ session('error') }}
-    </div>
-@endif
-<a href="/movies/create">Create</a>
+@extends('layouts.app')
 
-<!-- Search -->
-<form action="/movies" method="GET">
-    <input type="text" name="search" placeholder="Search for a movie..." value="{{ request('search') }}">
+@section('content')
 
-    <!-- Category dropdown list -->
-    <select name="category_id">
-        <option value="">All Categories</option>
-        @foreach($categories as $category)
-            <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>
-                {{ $category->name }}
-            </option>
-        @endforeach
-    </select>
-
-    <button type="submit">Search</button>
-</form>
-
-<!-- Movies -->
-@foreach($movies as $movie)
-    <article>
-        <h1>
-            <a href="/movies/{{ $movie->id }}">{{ $movie->title }}</a>
-        </h1>
-
-        <p>
-            <a href="/categories/{{ $movie->category->id }}">{{ $movie->category->name }}</a>
-        </p>
-
-        <div>{{ $movie->year_of_release }}</div>
-
-        <div>
-            <img src="{{ asset('storage/' . $movie->thumbnail) }}" alt="Thumbnail for {{ $movie->title }}" style="max-width:300px; height:auto;">
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
         </div>
-    </article>
-@endforeach
-</body>
-</html>
+    @endif
+
+    <h1 class="ml-6 mb-4">Reviews</h1>
+
+    <!-- Search -->
+    <form action="/movies" method="GET" class="p-6">
+        <input type="text" name="search" placeholder="Search for a movie..." value="{{ request('search') }}" class="border border-gray-300 p-2 rounded mr-2">
+
+        <!-- Category dropdown list -->
+        <select name="category_id" class="border border-gray-300 p-2 rounded mr-2">
+            <option value="">All Categories</option>
+            @foreach($categories as $category)
+                <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>
+                    {{ $category->name }}
+                </option>
+            @endforeach
+        </select>
+
+        <button type="submit" class="bg-blue-500 text-white p-2 rounded">Search</button>
+    </form>
+
+    <!-- Movies -->
+    <div class="grid grid-cols-3 gap-6 p-6">
+        @foreach($movies as $movie)
+            <article class="bg-white p-6 rounded-lg shadow-md">
+                <h1 class="text-2xl font-bold mb-4">
+                    {{ $movie->title }}
+                </h1>
+                <p class="mb-4">
+                    Category: {{ $movie->category->name }}
+                </p>
+                <p class="mb-4">
+                    Released in: {{ $movie->year_of_release }}
+                </p>
+                <div class="mb-4">
+                    <img src="{{ asset('storage/' . $movie->thumbnail) }}" alt="{{ $movie->title }}" class="w-full h-80 object-cover rounded">
+                </div>
+                <a href="/movies/{{ $movie->id }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
+                    View Details
+                </a>
+            </article>
+        @endforeach
+    </div>
+@endsection
