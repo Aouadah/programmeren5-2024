@@ -20,15 +20,25 @@
                 </div>
 
                 <div class="flex flex-col mb-4 w-96">
-                    <label for="genre">Genre:</label>
-                    <input type="text" id="genre" name="genre" value="{{ old('genre') }}" class="border border-gray-300 p-2 rounded">
-                    @error('genre')
+                    <label for="category">Category</label>
+                    <select name="category_id" class="border border-gray-300 p-2 rounded">
+                        @php
+                            $categories = Category::all()
+                        @endphp
+
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}" @if(old('category_id') == $category->id) selected @endif>
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('category_id')
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="flex flex-col mb-4 w-96">
-                    <label for="duration">Duration (minutes):</label>
+                    <label for="duration">Duration:</label>
                     <input type="number" id="duration" name="duration" value="{{ old('duration') }}" class="border border-gray-300 p-2 rounded">
                     @error('duration')
                     <div class="alert alert-danger">{{ $message }}</div>
@@ -54,34 +64,24 @@
                 </div>
 
                 <div class="flex flex-col mb-4 w-96">
-                    <label for="thumbnail">Thumbnail:</label>
-                    <input type="file" id="thumbnail" name="thumbnail" class="border border-gray-300 p-2 rounded">
-                    @error('thumbnail')
+                    <label for="Review">Review:</label>
+                    <textarea id="review" name="review" rows="5" class="border border-gray-300 p-2 rounded">{{ old('review') }}</textarea>
+                    @error('review')
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="flex flex-col mb-4 w-96">
-                    <label for="category">Category</label>
-                    <select name="category_id" class="border border-gray-300 p-2 rounded">
-                        @php
-                            $categories = Category::all()
-                        @endphp
-
-                        @foreach ($categories as $category)
-                            <option value="{{ $category->id }}" @if(old('category_id') == $category->id) selected @endif>
-                                {{ $category->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('category_id')
+                    <label for="thumbnail">Thumbnail:</label>
+                    <input type="file" id="thumbnail" name="thumbnail">
+                    @error('thumbnail')
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
             </div>
         </div>
         <div class="flex flex-col mx-auto">
-            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">Submit</button>
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">Create</button>
         </div>
     </form>
 @endsection

@@ -22,15 +22,23 @@
                 </div>
 
                 <div class="flex flex-col mb-4 w-96">
-                    <label for="genre">Genre:</label>
-                    <input type="text" id="genre" name="genre" value="{{ old('genre', $movie->genre) }}" class="border border-gray-300 p-2 rounded">
-                    @error('genre')
+                    <label for="category">Category</label>
+                    <select name="category_id" class="border border-gray-300 p-2 rounded">
+                        @php
+                            $categories = Category::all()
+                        @endphp
+
+                        @foreach ($categories as $category)
+                            <option value="{{ $category -> id }}">{{ $category->name }}</option>
+                        @endforeach
+                    </select>
+                    @error('category_id')
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="flex flex-col mb-4 w-96">
-                    <label for="duration">Duration (minutes):</label>
+                    <label for="duration">Duration:</label>
                     <input type="number" id="duration" name="duration" value="{{ old('duration', $movie->duration) }}" class="border border-gray-300 p-2 rounded">
                     @error('duration')
                     <div class="alert alert-danger">{{ $message }}</div>
@@ -56,25 +64,17 @@
                 </div>
 
                 <div class="flex flex-col mb-4 w-96">
-                    <label for="thumbnail">Thumbnail:</label>
-                    <input type="file" id="thumbnail" name="thumbnail" class="border border-gray-300 p-2 rounded">
-                    @error('thumbnail')
+                    <label for="Review">Review:</label>
+                    <textarea id="review" name="review" rows="5" class="border border-gray-300 p-2 rounded">{{ old('review', $movie->review) }}</textarea>
+                    @error('review')
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="flex flex-col mb-4 w-96">
-                    <label for="category">Category</label>
-                    <select name="category_id" class="border border-gray-300 p-2 rounded">
-                        @php
-                            $categories = Category::all()
-                        @endphp
-
-                        @foreach ($categories as $category)
-                            <option value="{{ $category -> id }}">{{ $category->name }}</option>
-                        @endforeach
-                    </select>
-                    @error('category_id')
+                    <label for="thumbnail">Thumbnail:</label>
+                    <input type="file" id="thumbnail" name="thumbnail">
+                    @error('thumbnail')
                     <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>

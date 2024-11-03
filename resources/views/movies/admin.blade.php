@@ -10,7 +10,6 @@
                 <th class="py-2 px-4 border border-gray-300">Title</th>
                 <th class="py-2 px-4 border border-gray-300">User</th>
                 <th class="py-2 px-4 border border-gray-300">Category</th>
-                <th class="py-2 px-4 border border-gray-300">Genre</th>
                 <th class="py-2 px-4 border border-gray-300">Duration</th>
                 <th class="py-2 px-4 border border-gray-300">Year of Release</th>
                 <th class="py-2 px-4 border border-gray-300">Rating</th>
@@ -22,7 +21,6 @@
                     <td class="py-2 px-4 border border-gray-300">{{$movie->title}}</td>
                     <td class="py-2 px-4 border border-gray-300">{{$movie->user->name}}</td>
                     <td class="py-2 px-4 border border-gray-300">{{$movie->category->name}}</td>
-                    <td class="py-2 px-4 border border-gray-300">{{$movie->genre}}</td>
                     <td class="py-2 px-4 border border-gray-300">{{$movie->duration}}</td>
                     <td class="py-2 px-4 border border-gray-300">{{$movie->year_of_release}}</td>
                     <td class="py-2 px-4 border border-gray-300">{{$movie->rating}}</td>

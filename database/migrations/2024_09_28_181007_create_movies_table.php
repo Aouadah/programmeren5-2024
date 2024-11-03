@@ -15,14 +15,14 @@ return new class extends Migration
         Schema::create('movies', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class);
-            $table->foreignId('category_id')->constrained();
             $table->string('title');
-            $table->string('genre');
+            $table->foreignId('category_id')->constrained();
             $table->string('duration');
             $table->string('year_of_release');
             $table->string('rating');
+            $table->string('review');
             $table->string('thumbnail')->nullable();
-            $table->string('status')->default('active');
+            $table->string('status')->default('inactive');
             $table->timestamps();
             $table->timestamp('published_at')->nullable();
         });

@@ -10,7 +10,7 @@
             Get it? It's like a combination of the words "movie" and "review"
         </h2>
         <div class="bg-white rounded-lg shadow-md mb-4 w-2/3">
-            <p class="text-lg p-1 border border-1 bg-gray-100">
+            <p class="text-lg p-1 border border-1 bg-gray-200">
                 What is Moview?
             </p>
             <p>
@@ -21,7 +21,7 @@
             </p>
         </div>
         <div class="bg-white rounded-lg shadow-md mb-4 w-2/3">
-            <p class="text-lg border border-1 bg-gray-100">
+            <p class="text-lg border border-1 bg-gray-200">
                 When can I start creating movie reviews?
             </p>
             <p>

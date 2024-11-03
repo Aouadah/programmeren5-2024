@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Models\UserLogin;
+use Carbon\Carbon;
 
 class RegisterController extends Controller
 {
@@ -63,10 +65,17 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        UserLogin::create([
+            'user_id' => $user->id,
+            'login_date' => Carbon::today()
+        ]);
+
+        return $user;
     }
 }

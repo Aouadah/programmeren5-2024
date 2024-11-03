@@ -23,22 +23,22 @@ class MovieController extends Controller
     // Index page
     public function index(Request $request)
     {
-        // Get all categories for the filter
         $categories = Category::all();
-
         $movies = Movie::query()->where('status', 'active');
 
-        // Search by movie title or year of release
         $search = $request->query('search');
+        $categoryId = $request->query('category_id');
+
+        // Search by movie title or year of release
         if ($search) {
-            $movies->where('title', 'LIKE', '%' . $search . '%')
-                ->orWhere('year_of_release', 'LIKE', '%' . $search . '%')->get();
+            $movies->where(function($query) use ($search) {
+                $query->where('title', 'LIKE', '%' . $search . '%')
+                    ->orWhere('year_of_release', 'LIKE', '%' . $search . '%');
+            });
         }
 
-        // Filter by category
-        $categoryId = $request->query('category_id');
         if ($categoryId) {
-            $movies->where('category_id', $categoryId)->get();
+            $movies->where('category_id', $categoryId);
         }
 
         $movies = $movies->get();
@@ -60,7 +60,7 @@ class MovieController extends Controller
         // You need to be logged in on 5 different days before you can create a new movie
         $loginDays = UserLogin::where('user_id', auth()->id())->distinct('login_date')->count();
 
-        if ($loginDays < 4) {
+        if ($loginDays < 5) {
             return redirect()->back()->with('error', 'You need to have logged in on 5 different days to create a movie.');
         }
 
@@ -72,17 +72,16 @@ class MovieController extends Controller
     {
         $attributes = $request->validate([
             'title' => 'required',
-            'genre' => 'required',
             'duration' => 'required',
             'year_of_release' => 'required',
             'rating' => 'required',
+            'review' => 'required',
             'thumbnail' => 'required|image',
             'category_id' => ['required', Rule::exists('categories', 'id')],
         ]);
 
         $attributes['user_id'] = auth()->id();
         $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails', 'public');
-        $attributes['status'] = 'inactive';
 
         Movie::create($attributes);
 
@@ -100,10 +99,10 @@ class MovieController extends Controller
 
         $attributes = $request->validate([
             'title' => 'required|string|max:255',
-            'genre' => 'required|string|max:255',
             'duration' => 'required|integer|min:1',
             'year_of_release' => 'required|integer|min:1900|max:2024',
             'rating' => 'required|numeric|min:1|max:10',
+            'review' => 'required|string|max:255',
             'category_id' => ['required', Rule::exists('categories', 'id')],
         ]);
 
@@ -156,7 +155,6 @@ class MovieController extends Controller
     // Show a table of all movies
     public function admin()
     {
-
         $movies = Movie::with('category')->get();
         $categories = Category::all();
 

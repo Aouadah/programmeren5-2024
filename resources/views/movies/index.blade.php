@@ -2,29 +2,24 @@
 
 @section('content')
 
-    @if(session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
-        </div>
-    @endif
-
     <h1 class="ml-6 mb-4">Reviews</h1>
 
     <!-- Search -->
     <form action="/movies" method="GET" class="p-6">
-        <input type="text" name="search" placeholder="Search for a movie..." value="{{ request('search') }}" class="border border-gray-300 p-2 rounded mr-2">
+        <h4>Search for a movie:</h4>
+        <input type="text" name="search" placeholder="Search" value="{{ request('search') }}" class="border border-gray-300 p-2 rounded mr-2">
 
         <!-- Category dropdown list -->
         <select name="category_id" class="border border-gray-300 p-2 rounded mr-2">
             <option value="">All Categories</option>
             @foreach($categories as $category)
-                <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>
+                <option value="{{ $category->id }}" @if(request('category_id') == $category->id) selected @endif>
                     {{ $category->name }}
                 </option>
             @endforeach
         </select>
 
-        <button type="submit" class="bg-blue-500 text-white p-2 rounded">Search</button>
+        <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded">Search</button>
     </form>
 
     <!-- Movies -->
